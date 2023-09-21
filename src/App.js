@@ -1,8 +1,9 @@
 import { CssBaseline } from "@mui/material";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Main from "screens/main";
+import Short from "screens/short";
+// import Main from "screens/main";
 import Test from "screens/test";
-
 
 function App() {
   return (
@@ -10,8 +11,10 @@ function App() {
       <BrowserRouter>
         <CssBaseline />
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<Navigate to="/test" replace />} />
           <Route path="/test" element={<Test />} />
+          <Route path="/short" element={<Short />} />
+          <Route path="/main" element={<Main />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -16,25 +16,62 @@ const ListTable = ({ items, probabilities, handleInputChange }) => {
         width: "100%",
         overflow: "hidden",
         boxShadow: "none",
+        backgroundColor: "transparent",
+        border: "1px solid #fafafa",
       }}
     >
       <TableContainer
         sx={{
           maxHeight: 214,
+
+          ".MuiTableHead-root .MuiTableCell-root": {
+            backgroundColor: "rgba(0, 0, 0, 0.06)",
+          },
           ".MuiTableCell-root": {
             textAlign: "center",
+            color: "#3b3b3b",
           },
-          ".MuiTableHead-root .MuiTableCell-root": {
-            backgroundColor: "#e9e9e9",
+          "& .MuiInput-root:before": {
+            borderBottom: "1px solid #fafafa",
+          },
+          "& .MuiInput-root:after": {
+            borderBottom: "1px solid #fafafa",
+          },
+          ".MuiInput-root": {
+            color: "#3b3b3b",
           },
         }}
       >
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: "bold" }}>순번</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>룰렛 내역</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>확률</TableCell>
+              <TableCell
+                sx={{
+                  fontWeight: "bold",
+                  color: "#fafafa",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                순번
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontWeight: "bold",
+                  color: "#fafafa",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                룰렛 내역
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontWeight: "bold",
+                  color: "#fafafa",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                확률
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
