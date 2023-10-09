@@ -23,7 +23,7 @@ const WinningHistoryTable = ({ winningHistory }) => {
       <TableContainer
         sx={{
           maxHeight: 214,
-          overflowY: "auto",
+          overflowY: "hidden", // Adjusted to hide the scrollbar
           ".MuiTableHead-root .MuiTableCell-root": {
             backgroundColor: "rgba(0, 0, 0, 0.06)",
           },
@@ -48,7 +48,6 @@ const WinningHistoryTable = ({ winningHistory }) => {
               <TableCell sx={{ fontWeight: "bold", color: "#fafafa" }}>
                 별
               </TableCell>
-              {/* <TableCell sx={{ fontWeight: "bold" }}>순번</TableCell> */}
               <TableCell sx={{ fontWeight: "bold", color: "#fafafa" }}>
                 당첨 내역
               </TableCell>
@@ -58,45 +57,45 @@ const WinningHistoryTable = ({ winningHistory }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {winningHistory.map((win, index) => (
-              <TableRow key={index}>
-                {/* <TableCell>{win.starCount}</TableCell> */}
-
-                <TableCell
-                  sx={
-                    index === winningHistory.length - 1
-                      ? { borderBottom: "none" }
-                      : null
-                  }
-                >
-                  {win.starCount}
-                </TableCell>
-                <TableCell
-                  sx={
-                    index === winningHistory.length - 1
-                      ? { borderBottom: "none" }
-                      : null
-                  }
-                >
-                  {win.item}
-                </TableCell>
-                <TableCell
-                  sx={
-                    index === winningHistory.length - 1
-                      ? { borderBottom: "none" }
-                      : null
-                  }
-                >
-                  {win.probability}%
-                </TableCell>
-              </TableRow>
-            ))}
-            {/* Conditional rendering for "당첨 내역 없음" */}
-            {winningHistory.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={2}>당첨 내역 없음</TableCell>
-              </TableRow>
-            )}
+            <div style={{ maxHeight: "214px", overflowY: "auto" }}>
+              {winningHistory.map((win, index) => (
+                <TableRow key={index}>
+                  <TableCell
+                    sx={
+                      index === winningHistory.length - 1
+                        ? { borderBottom: "none" }
+                        : null
+                    }
+                  >
+                    {win.starCount}
+                  </TableCell>
+                  <TableCell
+                    sx={
+                      index === winningHistory.length - 1
+                        ? { borderBottom: "none" }
+                        : null
+                    }
+                  >
+                    {win.item}
+                  </TableCell>
+                  <TableCell
+                    sx={
+                      index === winningHistory.length - 1
+                        ? { borderBottom: "none" }
+                        : null
+                    }
+                  >
+                    {win.probability}%
+                  </TableCell>
+                </TableRow>
+              ))}
+              {/* Conditional rendering for "당첨 내역 없음" */}
+              {winningHistory.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={2}>당첨 내역 없음</TableCell>
+                </TableRow>
+              )}
+            </div>
           </TableBody>
         </Table>
       </TableContainer>
