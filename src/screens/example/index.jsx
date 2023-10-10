@@ -396,7 +396,6 @@ const Test = () => {
               <ExampleCompChart
                 items={items}
                 probabilities={probabilities}
-             
                 handleInputChange={handleInputChange}
               />
 

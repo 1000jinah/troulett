@@ -54,7 +54,6 @@ const ExampleCompChart = ({ items, probabilities, streamerName, rouletteTitle })
   if (!chartData) {
     return <div>Error: Invalid data</div>;
   }
-
   const options = {
     series: [
       {
