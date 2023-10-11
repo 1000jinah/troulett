@@ -13,6 +13,7 @@
     "axios": "^1.4.0",
     "file-saver": "^2.0.5",
     "highcharts": "^11.1.0",
+    "highcharts-more": "^0.1.7",
     "highcharts-react-official": "^3.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

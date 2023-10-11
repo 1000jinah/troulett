@@ -15,6 +15,7 @@ import Profile from "components/Profile";
 import DefaultBox from "components/DefaultBox";
 import Header from "components/Header";
 import ExampleCompChart from "components/ExampleChart";
+import ActivityChart from "components/ExampleActiveChart";
 
 const Test = () => {
   const [items, setItems] = useState(["꽝", "당첨", "당첨광"]); // 룰렛 내역들의 배열
@@ -37,7 +38,6 @@ const Test = () => {
     // Update items and probabilities based on selectedExcelItem
     setItems(excelItem.excDownItem);
     setProbabilities(excelItem.excDownPercent);
-  
   };
 
   // 별 개수별 당첨 횟수와 상품 당첨 내역을 계산하는 함수
@@ -270,7 +270,17 @@ const Test = () => {
       fileInput.value = ""; // Only modify value if fileInput is not null
     }
   };
+  const cancelSpin = totalSpins - getItemFrequencyForSelectedTargetItem();
+  const checkSpin = getItemFrequencyForSelectedTargetItem();
+  const moneySpin = totalSpins;
 
+  const checkStack =
+    getItemFrequencyForSelectedTargetItem() > 0
+      ? ((getItemFrequencyForSelectedTargetItem() / totalSpins) * 100).toFixed(
+          2
+        )
+      : "-";
+  const moneyStack = cumulativeAmount;
   return (
     <Box>
       <Header />
@@ -398,182 +408,189 @@ const Test = () => {
                 probabilities={probabilities}
                 handleInputChange={handleInputChange}
               />
-
-              {/* <Box>
-                <ListTable
-                  items={items}
-                  probabilities={probabilities}
-                  handleInputChange={handleInputChange}
-                />
-              </Box> */}
             </DefaultBox>
 
             {/* 당첨내역(테이블) */}
-            <DefaultBox>
+            {/* <DefaultBox>
               <Typography sx={{ fontWeight: "bold", fontSize: 16 }}>
                 당첨 내역
               </Typography>
-              <Box sx={{ maxHeight: 250, border: "0px solid transparent" }}>
+              <Box sx={{ maxHeight: 400, border: "0px solid transparent" }}>
                 <WinningHistoryTable winningHistory={winningHistory} />
               </Box>
-            </DefaultBox>
-
-            {/* 당첨내역리스트(횟수) */}
-            <DefaultBox>
-              {selectedExcelItem && (
-                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                  {selectedExcelItem.name}의 {selectedExcelItem.streamname}{" "}
-                  {/* Display streamname here */}
-                </Typography>
-              )}
-              <List sx={{ my: 0, py: 0 }}>
-                {Object.entries(getItemFrequency(winningHistory)).map(
-                  ([item, count]) => (
-                    <ListItemText
-                      sx={{ display: "flex" }}
-                      key={item}
-                      className="textsub"
-                    >
-                      {item} -{" "}
-                      <Typography
-                        variant="span"
-                        sx={{ fontSize: 18, fontWeight: "bold" }}
-                      >
-                        {count}번
-                      </Typography>{" "}
-                      당첨
-                    </ListItemText>
-                  )
-                )}
-              </List>
-            </DefaultBox>
+            </DefaultBox> */}
 
             {/* 상품선택(셀렉트) */}
             <DefaultBox>
-              <Box className="textmain">상품 선택</Box>
-              <select
-                label="상품을 선택하세요"
-                style={{
-                  border: "0px solid transparent",
-                  padding: "8px 4px",
-                  paddingRight: "12px",
-
-                  outline: "none",
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                 }}
-                value={selectedTargetItem}
-                onChange={(e) =>
-                  handleInputChange("selectedTargetItem", e.target.value)
-                }
               >
-                {items.map((item, index) => (
-                  <option key={index} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+                <Typography sx={{ fontWeight: "bold", fontSize: 16 }}>
+                  당첨 상품 선택
+                </Typography>
+                <select
+                  label="상품을 선택하세요"
+                  style={{
+                    border: "0px solid transparent",
+                    padding: "8px 4px",
+                    paddingRight: "12px",
+
+                    outline: "none",
+                  }}
+                  value={selectedTargetItem}
+                  onChange={(e) =>
+                    handleInputChange("selectedTargetItem", e.target.value)
+                  }
+                >
+                  {items.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </Box>
+              <ActivityChart
+                cancelSpin={cancelSpin}
+                checkSpin={checkSpin}
+                moneySpin={moneySpin}
+                checkStack={checkStack}
+                moneyStack={moneyStack}
+                checkItemName={selectedTargetItem}
+              />{" "}
             </DefaultBox>
 
-            <DefaultBox>
-              {/* 상품명 */}
+            {/* 당첨내역리스트(횟수) */}
+            {/* <DefaultBox>
               <Box>
-                <Typography variant="span" className="textmain">
-                  상품명:
-                </Typography>
-                <Typography
-                  variant="span"
-                  sx={{ fontWeight: "bold" }}
-                  className="textsub"
+                {selectedExcelItem && (
+                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    {selectedExcelItem.name}의 {selectedExcelItem.streamname}{" "}
+                  </Typography>
+                )}
+                <List
+                  sx={{ my: 0, py: 0, mb: 3, height: 180, overflowY: "auto" }}
                 >
-                  {selectedTargetItem !== null ? selectedTargetItem : "-"}
-                </Typography>
-              </Box>
-              {/* 상품 확률(%) */}
-              <Box>
-                <Typography variant="span" className="textmain">
-                  상품 확률(%):
-                </Typography>
-                <Typography
-                  variant="span"
-                  sx={{ fontWeight: "bold" }}
-                  className="textsub"
-                >
-                  {getItemFrequencyForSelectedTargetItem() > 0
-                    ? (
-                        (getItemFrequencyForSelectedTargetItem() / totalSpins) *
-                        100
-                      ).toFixed(2)
-                    : "-"}
-                </Typography>
-              </Box>
-              {/* 룰렛 사용 누적 금액 */}
-              <Box>
-                <Typography variant="span" className="textmain">
-                  룰렛 사용 누적 금액:
-                </Typography>
-                <Typography
-                  variant="span"
-                  sx={{ fontWeight: "bold" }}
-                  className="textsub"
-                >
-                  {cumulativeAmount}원
-                </Typography>
-              </Box>
-            </DefaultBox>
+                  {Object.entries(getItemFrequency(winningHistory)).map(
+                    ([item, count]) => (
+                      <ListItemText
+                        sx={{ display: "flex" }}
+                        key={item}
+                        className="textsub"
+                      >
+                        {item} -{" "}
+                        <Typography
+                          variant="span"
+                          sx={{ fontSize: 18, fontWeight: "bold" }}
+                        >
+                          {count}번
+                        </Typography>{" "}
+                        당첨
+                      </ListItemText>
+                    )
+                  )}
+                </List>
 
-            <DefaultBox>
-              {/* 상품 당첨 횟수 */}
-              <Box>
-                <Typography variant="span" className="textmain">
-                  상품 당첨 횟수:
-                </Typography>
-                <Typography
-                  variant="span"
-                  sx={{ fontWeight: "bold" }}
-                  className="textsub"
-                >
-                  {getItemFrequencyForSelectedTargetItem() > 0
-                    ? getItemFrequencyForSelectedTargetItem()
-                    : "-"}
-                </Typography>
-              </Box>
-              {/* 상품 총 횟수 */}
-              <Box>
-                <Typography variant="span" className="textmain">
-                  상품 총 횟수:
-                </Typography>
-                <Typography
-                  variant="span"
-                  sx={{ fontWeight: "bold" }}
-                  className="textsub"
-                >
-                  {totalSpins > 0 ? totalSpins : "-"}
-                </Typography>
-              </Box>
+                <Box sx={{ border: "1px solid #eee", mb: 2 }}>
+                  <Box sx={{ pb: 2 }}>
+                    <Typography variant="span" className="textmain">
+                      상품명:
+                    </Typography>
+                    <Typography
+                      variant="span"
+                      sx={{ fontWeight: "bold" }}
+                      className="textsub"
+                    >
+                      {selectedTargetItem !== null ? selectedTargetItem : "-"}
+                    </Typography>
+                  </Box>
 
-              {/* 누적 룰렛 횟수 */}
-              <Box>
-                <Typography variant="span" className="textmain">
-                  누적 룰렛 횟수:
-                </Typography>
-                <Typography
-                  variant="span"
-                  sx={{ fontWeight: "bold" }}
-                  className="textsub"
-                >
-                  {totalSpins}회
-                </Typography>
+                  <Box sx={{ pb: 2 }}>
+                    <Typography variant="span" className="textmain">
+                      상품 확률(%):
+                    </Typography>
+                    <Typography
+                      variant="span"
+                      sx={{ fontWeight: "bold" }}
+                      className="textsub"
+                    >
+                      {getItemFrequencyForSelectedTargetItem() > 0
+                        ? (
+                            (getItemFrequencyForSelectedTargetItem() /
+                              totalSpins) *
+                            100
+                          ).toFixed(2)
+                        : "-"}
+                    </Typography>
+                  </Box>
+
+                  <Box>
+                    <Typography variant="span" className="textmain">
+                      룰렛 사용 누적 금액:
+                    </Typography>
+                    <Typography
+                      variant="span"
+                      sx={{ fontWeight: "bold" }}
+                      className="textsub"
+                    >
+                      {cumulativeAmount}원
+                    </Typography>
+                  </Box>
+                </Box>
+
+                <Box sx={{ border: "1px solid #eee" }}>
+                  <Box sx={{ pb: 2 }}>
+                    <Typography variant="span" className="textmain">
+                      상품 당첨 횟수:
+                    </Typography>
+                    <Typography
+                      variant="span"
+                      sx={{ fontWeight: "bold" }}
+                      className="textsub"
+                    >
+                      {getItemFrequencyForSelectedTargetItem() > 0
+                        ? getItemFrequencyForSelectedTargetItem()
+                        : "-"}
+                    </Typography>
+                  </Box>
+
+                  <Box sx={{ pb: 2 }}>
+                    <Typography variant="span" className="textmain">
+                      상품 총 횟수:
+                    </Typography>
+                    <Typography
+                      variant="span"
+                      sx={{ fontWeight: "bold" }}
+                      className="textsub"
+                    >
+                      {totalSpins > 0 ? totalSpins : "-"}
+                    </Typography>
+                  </Box>
+
+                  <Box>
+                    <Typography variant="span" className="textmain">
+                      누적 룰렛 횟수:
+                    </Typography>
+                    <Typography
+                      variant="span"
+                      sx={{ fontWeight: "bold" }}
+                      className="textsub"
+                    >
+                      {totalSpins}회
+                    </Typography>
+                  </Box>
+                </Box>
               </Box>
-            </DefaultBox>
+            </DefaultBox> */}
 
             {/* footer */}
           </Box>
 
           {/* 스트리머 검색 */}
           <DefaultBox sx={{ margin: "20px", marginTop: "-10px" }}>
-            <Typography sx={{ fontWeight: "bold", fontSize: 18 }}>
-              스트리머 검색
-            </Typography>
-
             <Box
               sx={{
                 height: "400px",

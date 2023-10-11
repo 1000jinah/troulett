@@ -43,18 +43,40 @@ const Profile = ({ onSelectExcelItem }) => {
     return !isMatching;
   });
   return (
-    <Box>
-      <input
-        type="text"
-        placeholder="검색..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ marginBottom: "10px" }}
-      />
+    <Box sx={{ position: "relative" }}>
+      <Box
+        sx={{
+          position: "sticky",
+          top: 0,
+          zIndex: 20000,
+          pb: 3,
+          backgroundColor: "#fff",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography sx={{ fontWeight: "bold", fontSize: 18 }}>
+          스트리머 검색
+        </Typography>
+        <input
+          type="text"
+          placeholder="검색..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{
+            border: "none",
+            borderBottom: "1px solid #eee",
+            width: "auto",
+            minWidth: 200,
+            outline: 0,
+          }}
+        />
+      </Box>
       <Card
         sx={{
           backgroundColor: "#fff",
-
+         
           borderRadius: 0,
           borderBottomLeftRadius: 0,
           borderBottomRightRadius: 0,
@@ -169,7 +191,7 @@ const Profile = ({ onSelectExcelItem }) => {
                         <Chip
                           sx={{
                             color: "#3b3b3b",
-                            backgroundColor:"rgba(0, 0, 0, 0.06)",
+                            backgroundColor: "rgba(0, 0, 0, 0.06)",
                             // Add styles specific to chips
                             margin: "0 4px", // Adjust spacing as needed
                           }}
@@ -182,7 +204,7 @@ const Profile = ({ onSelectExcelItem }) => {
                           <Chip
                             sx={{
                               color: "#3b3b3b",
-                              backgroundColor:"rgba(0, 0, 0, 0.06)",
+                              backgroundColor: "rgba(0, 0, 0, 0.06)",
                               // Add styles specific to chips
                               margin: "0 4px", // Adjust spacing as needed
                             }}
@@ -210,12 +232,14 @@ const Profile = ({ onSelectExcelItem }) => {
                     }}
                   >
                     <AccordionSummary
-                      sx={{ backgroundColor: "rgba(0, 0, 0, 0.06)",}}
+                      sx={{ backgroundColor: "rgba(0, 0, 0, 0.06)" }}
                       expandIcon={<ExpandMoreIcon />}
                     >
                       <Typography>링크</Typography>
                     </AccordionSummary>
-                    <AccordionDetails sx={{ backgroundColor: "rgba(0, 0, 0, 0.08)", }}>
+                    <AccordionDetails
+                      sx={{ backgroundColor: "rgba(0, 0, 0, 0.08)" }}
+                    >
                       <Box
                         sx={{
                           display: "flex",
@@ -224,7 +248,7 @@ const Profile = ({ onSelectExcelItem }) => {
                       >
                         {item.urlItems.map((urlItem, urlIndex) => (
                           <Link
-                            style={{  color: "#3b3b3b", textDecoration: "none" }}
+                            style={{ color: "#3b3b3b", textDecoration: "none" }}
                             target="_blank"
                             key={urlIndex}
                             to={urlItem.urlLink}
@@ -239,15 +263,17 @@ const Profile = ({ onSelectExcelItem }) => {
                   <Accordion
                     expanded={expandedAccordion === `excelAccordion-${index}`}
                     onChange={handleAccordionChange(`excelAccordion-${index}`)}
-                    sx={{ borderRadius: 0, width: "100%",  color: "#3b3b3b", }}
+                    sx={{ borderRadius: 0, width: "100%", color: "#3b3b3b" }}
                   >
                     <AccordionSummary
-                      sx={{ backgroundColor:"rgba(0, 0, 0, 0.06)", }}
+                      sx={{ backgroundColor: "rgba(0, 0, 0, 0.06)" }}
                       expandIcon={<ExpandMoreIcon />}
                     >
                       <Typography>엑셀 다운로드</Typography>
                     </AccordionSummary>
-                    <AccordionDetails sx={{  backgroundColor:"rgba(0, 0, 0, 0.08)", }}>
+                    <AccordionDetails
+                      sx={{ backgroundColor: "rgba(0, 0, 0, 0.08)" }}
+                    >
                       <Box sx={{ display: "flex", flexDirection: "column" }}>
                         {item.execelItems.map((excelItem, excelIndex) => (
                           <Typography

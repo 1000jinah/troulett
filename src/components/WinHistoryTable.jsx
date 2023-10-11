@@ -1,105 +1,137 @@
 import React from "react";
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableHead,
-  TableRow,
-  TableContainer,
-  TableCell,
-} from "@mui/material";
+import { Box } from "@mui/material";
 
 const WinningHistoryTable = ({ winningHistory }) => {
   return (
-    <Paper
-      sx={{
-        width: "100%",
-        overflow: "hidden",
-        boxShadow: "none",
-        backgroundColor: "transparent",
-        border: "1px solid #fafafa",
-      }}
-    >
-      <TableContainer
-        sx={{
-          maxHeight: 214,
-          overflowY: "hidden", // Adjusted to hide the scrollbar
-          ".MuiTableHead-root .MuiTableCell-root": {
-            backgroundColor: "rgba(0, 0, 0, 0.06)",
-          },
-          ".MuiTableCell-root": {
-            textAlign: "center",
-            color: "#3b3b3b",
-          },
-          "& .MuiInput-root:before": {
-            borderBottom: "1px solid #fafafa",
-          },
-          "& .MuiInput-root:after": {
-            borderBottom: "1px solid #fafafa",
-          },
-          ".MuiInput-root": {
-            color: "#3b3b3b",
-          },
-        }}
-      >
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ fontWeight: "bold", color: "#fafafa" }}>
-                별
-              </TableCell>
-              <TableCell sx={{ fontWeight: "bold", color: "#fafafa" }}>
-                당첨 내역
-              </TableCell>
-              <TableCell sx={{ fontWeight: "bold", color: "#fafafa" }}>
-                확률
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <div style={{ maxHeight: "214px", overflowY: "auto" }}>
-              {winningHistory.map((win, index) => (
-                <TableRow key={index}>
-                  <TableCell
-                    sx={
-                      index === winningHistory.length - 1
-                        ? { borderBottom: "none" }
-                        : null
+    <Box>
+      <div style={{ width: "100%", backgroundColor: "#bebebe" }}>
+        <Box sx={{ width: "100%", display: "flex" }}>
+          <Box
+            sx={{
+              width: "20%",
+              textAlign: "center",
+              fontWeight: "bold",
+              color: "#fafafa",
+              p: 1.5,
+              fontSize: 12,
+            }}
+          >
+            별
+          </Box>
+          <Box
+            sx={{
+              width: "60%",
+              textAlign: "center",
+              fontWeight: "bold",
+              color: "#fafafa",
+              p: 1.5,
+              fontSize: 12,
+            }}
+          >
+            당첨 내역
+          </Box>
+          <Box
+            sx={{
+              width: "20%",
+              textAlign: "center",
+              fontWeight: "bold",
+              color: "#fafafa",
+              p: 1.5,
+              fontSize: 12,
+            }}
+          >
+            확률
+          </Box>
+        </Box>
+      </div>
+
+      <div style={{ maxHeight: 350, overflowY: "auto", width: "100%" }}>
+        {winningHistory.map((win, index) => (
+          <Box key={index} sx={{ width: "100%", display: "flex" }}>
+            <Box
+              sx={
+                index === winningHistory.length - 1 &&
+                winningHistory.length !== 0
+                  ? {
+                      borderBottom: "none",
+                      width: "20%",
+                      textAlign: "center",
+                      p: 2,
+                      fontSize: 12,
                     }
-                  >
-                    {win.starCount}
-                  </TableCell>
-                  <TableCell
-                    sx={
-                      index === winningHistory.length - 1
-                        ? { borderBottom: "none" }
-                        : null
+                  : winningHistory.length !== 0
+                  ? {
+                      borderBottom: "1px solid #b3b3b3",
+                      width: "20%",
+                      textAlign: "center",
+                      p: 2,
+                      fontSize: 12,
                     }
-                  >
-                    {win.item}
-                  </TableCell>
-                  <TableCell
-                    sx={
-                      index === winningHistory.length - 1
-                        ? { borderBottom: "none" }
-                        : null
+                  : null
+              }
+            >
+              {win.starCount}
+            </Box>
+            <Box
+              sx={
+                index === winningHistory.length - 1 &&
+                winningHistory.length !== 0
+                  ? {
+                      borderBottom: "none",
+                      width: "60%",
+                      textAlign: "center",
+                      p: 2,
+                      fontSize: 12,
                     }
-                  >
-                    {win.probability}%
-                  </TableCell>
-                </TableRow>
-              ))}
-              {/* Conditional rendering for "당첨 내역 없음" */}
-              {winningHistory.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={2}>당첨 내역 없음</TableCell>
-                </TableRow>
-              )}
-            </div>
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+                  : winningHistory.length !== 0
+                  ? {
+                      borderBottom: "1px solid #b3b3b3",
+                      width: "60%",
+                      textAlign: "center",
+                      p: 2,
+                      fontSize: 12,
+                    }
+                  : null
+              }
+            >
+              {win.item}
+            </Box>
+            <Box
+              sx={
+                index === winningHistory.length - 1 &&
+                winningHistory.length !== 0
+                  ? {
+                      borderBottom: "none",
+                      width: "20%",
+                      textAlign: "center",
+                      p: 2,
+                      fontSize: 12,
+                    }
+                  : winningHistory.length !== 0
+                  ? {
+                      borderBottom: "1px solid #b3b3b3",
+                      width: "20%",
+                      textAlign: "center",
+                      p: 2,
+                      fontSize: 12,
+                    }
+                  : null
+              }
+            >
+              {win.probability}%
+            </Box>
+          </Box>
+        ))}
+        {/* Conditional rendering for "당첨 내역 없음" */}
+        {winningHistory.length === 0 && (
+          <Box>
+            <Box sx={{ width: "100%", textAlign: "center", p: 2 }}>
+              당첨 내역 없음
+            </Box>
+          </Box>
+        )}
+      </div>
+    </Box>
   );
 };
 

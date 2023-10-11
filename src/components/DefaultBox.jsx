@@ -8,7 +8,7 @@ const DefaultBox = styled(Box)({
   borderRadius: 3,
   display:"flex",
   flexDirection:"column",
-  justifyContent:"center",
+  // justifyContent:"center",
   boxShadow:"0px 0px 30px #7176791A"
 });
 
