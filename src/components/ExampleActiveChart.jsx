@@ -195,7 +195,7 @@ const ActivityChart = ({
               radius: "112%",
               innerRadius: "88%",
               y: cancelSpin,
-            
+
             },
           ],
           dataLabels: {

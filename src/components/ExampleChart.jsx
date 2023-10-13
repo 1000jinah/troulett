@@ -2,7 +2,12 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-const ExampleCompChart = ({ items, probabilities, streamerName, rouletteTitle }) => {
+const ExampleCompChart = ({
+  items,
+  probabilities,
+  streamerName,
+  rouletteTitle,
+}) => {
   const [chart, setChart] = useState(null);
 
   const chartRef = useRef(null);
@@ -36,6 +41,14 @@ const ExampleCompChart = ({ items, probabilities, streamerName, rouletteTitle })
         title: {
           text: "",
         },
+        colors: [
+          "rgba(255, 0, 0, 0.5)", // 빨강
+          "rgba(255, 165, 0, 0.5)", // 주황
+          "rgba(255, 255, 0, 0.5)", // 노랑
+          "rgba(0, 128, 0, 0.5)", // 초록
+          "rgba(0, 0, 255, 0.5)", // 파랑
+          "rgba(128, 0, 128, 0.5)", // 보라
+        ],
         series: [
           {
             name: "룰렛 상품",
@@ -64,11 +77,14 @@ const ExampleCompChart = ({ items, probabilities, streamerName, rouletteTitle })
           useHTML: true,
           formatter: function () {
             return (
-              '<span style="font-size:18px; color:' +
+              '<span style="display:block; position:absolute; top:7px; width:12px; height:12px; border-radius:50%; background-color:' +
               this.point.color +
               '">' +
+              "</span>" +
+              '<span style=" margin-left:20px;font-size:18px;">' +
               this.point.name +
               "</span>" +
+
               '<span style="border:0px; height:20px;"><span style="font-size:18px; font-weight:bold; padding-left:100px;">' +
               this.y +
               "%</span>"
@@ -82,6 +98,17 @@ const ExampleCompChart = ({ items, probabilities, streamerName, rouletteTitle })
           layout: "vertical",
           itemMarginTop: 7,
           itemMarginBottom: 7,
+          navigation: {
+            activeColor: "#3E576F",
+            animation: true,
+            arrowSize: 12,
+
+            inactiveColor: "#CCC",
+            style: {
+              fontWeight: "bold",
+              color: "#333",
+            },
+          },
           labelFormat: "{name}: {y}%",
           itemStyle: {
             fontSize: "12px",
@@ -92,13 +119,13 @@ const ExampleCompChart = ({ items, probabilities, streamerName, rouletteTitle })
         },
         navigation: {
           menuItemStyle: {
-            fontSize: '12px'
+            fontSize: "12px",
           },
           menuItemHoverStyle: {
-            background: 'red',
-            color: 'white',
-            fontSize: '12px'
-          }
+            background: "red",
+            color: "white",
+            fontSize: "12px",
+          },
         },
       };
 
@@ -115,3 +142,4 @@ const ExampleCompChart = ({ items, probabilities, streamerName, rouletteTitle })
 };
 
 export default ExampleCompChart;
+
