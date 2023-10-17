@@ -108,6 +108,7 @@ const ActivityChart = ({
     Highcharts.chart("activity-container", {
       chart: {
         type: "solidgauge",
+      chartWidth:"150px",
         height: "90%",
         events: {
           // render: renderIcons,

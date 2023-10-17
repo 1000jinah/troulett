@@ -42,6 +42,20 @@ const Profile = ({ onSelectExcelItem }) => {
         : item.labels?.toLowerCase()?.includes(searchTerm.toLowerCase()));
     return !isMatching;
   });
+  const inputStyles = {
+    border: "none",
+    borderBottom: "1px solid #eee",
+    outline: 0,
+  };
+
+  if (window.innerWidth <= 450) {
+    inputStyles.minWidth = "none";
+    inputStyles.width = "100%";
+  } else {
+    inputStyles.minWidth = 200;
+    inputStyles.width = "auto";
+  }
+
   return (
     <Box sx={{ position: "relative" }}>
       <Box
@@ -54,6 +68,9 @@ const Profile = ({ onSelectExcelItem }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          "@media (max-width: 450px)": {
+            display: "block",
+          },
         }}
       >
         <Typography sx={{ fontWeight: "bold", fontSize: 18 }}>
@@ -61,22 +78,16 @@ const Profile = ({ onSelectExcelItem }) => {
         </Typography>
         <input
           type="text"
-          placeholder="검색..."
+          placeholder="관련 정보를 기입해주세요"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            border: "none",
-            borderBottom: "1px solid #eee",
-            width: "auto",
-            minWidth: 200,
-            outline: 0,
-          }}
+          style={inputStyles}
         />
       </Box>
       <Card
         sx={{
           backgroundColor: "#fff",
-         
+
           borderRadius: 0,
           borderBottomLeftRadius: 0,
           borderBottomRightRadius: 0,
@@ -172,6 +183,9 @@ const Profile = ({ onSelectExcelItem }) => {
                         variant="h5"
                         component="div"
                         sx={{
+                          "@media (max-width: 450px)": {
+                            fontSize: "0.9rem",
+                          },
                           color: "#3B3B3B",
                         }}
                       >
@@ -180,13 +194,16 @@ const Profile = ({ onSelectExcelItem }) => {
                       <Typography
                         variant="body2"
                         sx={{
-                          color: "#3B3B3B",
+                          "@media (max-width: 450px)": {
+                            fontSize: "0.78rem",
+                          },
+                          color: "#9a9a9a",
                         }}
                       >
                         {`(${item.id})`}
                       </Typography>
                     </Box>
-                    <Box>
+                    {/* <Box>
                       {item.labels.map((label, labelIndex) => (
                         <Chip
                           sx={{
@@ -212,7 +229,7 @@ const Profile = ({ onSelectExcelItem }) => {
                             label={lang}
                           />
                         ))}
-                    </Box>
+                    </Box> */}
                   </CardContent>
                 </Box>
                 <Box
@@ -222,7 +239,7 @@ const Profile = ({ onSelectExcelItem }) => {
                     alignItems: "flex-start",
                   }}
                 >
-                  <Accordion
+                  {/* <Accordion
                     expanded={expandedAccordion === `urlAccordion-${index}`}
                     onChange={handleAccordionChange(`urlAccordion-${index}`)}
                     sx={{
@@ -259,7 +276,7 @@ const Profile = ({ onSelectExcelItem }) => {
                       </Box>
                     </AccordionDetails>
                   </Accordion>
-                  <Divider orientation="vertical" variant="middle" />
+                  <Divider orientation="vertical" variant="middle" /> */}
                   <Accordion
                     expanded={expandedAccordion === `excelAccordion-${index}`}
                     onChange={handleAccordionChange(`excelAccordion-${index}`)}
@@ -269,7 +286,16 @@ const Profile = ({ onSelectExcelItem }) => {
                       sx={{ backgroundColor: "rgba(0, 0, 0, 0.06)" }}
                       expandIcon={<ExpandMoreIcon />}
                     >
-                      <Typography>엑셀 다운로드</Typography>
+                      <Typography
+                        sx={{
+                          "@media (max-width: 450px)": {
+                            fontSize: "0.9rem",
+                          },
+                          color: "#3B3B3B",
+                        }}
+                      >
+                        {item.name}의 룰렛 내역
+                      </Typography>
                     </AccordionSummary>
                     <AccordionDetails
                       sx={{ backgroundColor: "rgba(0, 0, 0, 0.08)" }}
@@ -277,7 +303,12 @@ const Profile = ({ onSelectExcelItem }) => {
                       <Box sx={{ display: "flex", flexDirection: "column" }}>
                         {item.execelItems.map((excelItem, excelIndex) => (
                           <Typography
-                            sx={{ color: "#3b3b3b" }}
+                            sx={{
+                              "@media (max-width: 450px)": {
+                                fontSize: "0.78rem",
+                              },
+                              color: "#3b3b3b",
+                            }}
                             key={excelIndex}
                             onClick={() =>
                               handleExcelItemClick(

@@ -323,13 +323,24 @@ const Test = () => {
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
               gap: "10px",
               padding: "20px",
+
+              "@media (max-width: 450px)": {
+                display: "block",
+              },
             }}
           >
             {/* 타이틀박스 */}
-            <DefaultBox sx={{ backgroundColor: "transparent" }}>
+            <DefaultBox
+              sx={{
+                backgroundColor: "transparent",
+                "@media (max-width: 450px)": {
+                  mb: 4,
+                },
+              }}
+            >
               <Typography
                 sx={{
                   fontWeight: "bold",
@@ -377,7 +388,13 @@ const Test = () => {
             </DefaultBox>
 
             {/* 룰렛 1회 사용금액 */}
-            <DefaultBox>
+            <DefaultBox
+              sx={{
+                "@media (max-width: 450px)": {
+                  mb: 4,
+                },
+              }}
+            >
               <Typography sx={{ color: "#3B3B3B" }}>
                 룰렛 1회 사용금액 (원) :
               </Typography>
@@ -399,7 +416,13 @@ const Test = () => {
             </DefaultBox>
 
             {/* 등록내역(테이블) */}
-            <DefaultBox>
+            <DefaultBox
+              sx={{
+                "@media (max-width: 450px)": {
+                  mb: 4,
+                },
+              }}
+            >
               <Typography sx={{ fontWeight: "bold", fontSize: 16 }}>
                 등록 내역
               </Typography>
@@ -421,7 +444,13 @@ const Test = () => {
             </DefaultBox> */}
 
             {/* 상품선택(셀렉트) */}
-            <DefaultBox>
+            <DefaultBox
+              sx={{
+                "@media (max-width: 450px)": {
+                  mb: 3,
+                },
+              }}
+            >
               <Box
                 sx={{
                   display: "flex",

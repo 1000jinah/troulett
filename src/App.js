@@ -12,7 +12,7 @@ function App() {
       <BrowserRouter>
         <CssBaseline />
         <Routes>
-          <Route path="/" element={<Navigate to="/test" replace />} />
+          <Route path="/" element={<Navigate to="/example" replace />} />
           <Route path="/test" element={<Test />} />
           <Route path="/short" element={<Short />} />
           <Route path="/main" element={<Main />} />
