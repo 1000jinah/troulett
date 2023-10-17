@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -8,18 +8,33 @@ import {
   AccordionSummary,
   AccordionDetails,
   Box,
-  Chip,
-  Divider,
+  Snackbar,
+  Alert,
+  // Chip,
+  // Divider,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import listData from "data/data";
-
+const shuffleArray = (array) => {
+  let shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+};
 const Profile = ({ onSelectExcelItem }) => {
+  const [shuffledListData, setShuffledListData] = useState([]);
   const [expandedAccordion, setExpandedAccordion] = useState(null);
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태 추가
   const [selectedExcelItem, setSelectedExcelItem] = useState(null); // 선택된 엑셀 아이템 상태 추가
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  useEffect(() => {
+    setShuffledListData(shuffleArray(listData));
+  }, []);
   if (!Array.isArray(listData)) {
     return null; // or render a loading state or error message
   }
@@ -30,7 +45,19 @@ const Profile = ({ onSelectExcelItem }) => {
     setSelectedExcelItem(excelItem);
     onSelectExcelItem(excelItem, streamerName, excDownPrice); // Update the parent component's state
     console.log(selectedExcelItem);
+    if (selectedExcelItem !== null) {
+      setSnackbarMessage("Excel item selected successfully!");
+    } else {
+      setSnackbarMessage("No data available for this Excel item.");
+    }
+
+    setSnackbarOpen(true);
   };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
   const noMatchingItems = listData.every((item) => {
     const isMatching =
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -42,6 +69,7 @@ const Profile = ({ onSelectExcelItem }) => {
         : item.labels?.toLowerCase()?.includes(searchTerm.toLowerCase()));
     return !isMatching;
   });
+
   const inputStyles = {
     border: "none",
     borderBottom: "1px solid #eee",
@@ -143,7 +171,7 @@ const Profile = ({ onSelectExcelItem }) => {
             </Box>
           </Box>
         ) : (
-          listData.map((item, index) => {
+          shuffledListData.map((item, index) => {
             // 검색어와 일치하는지 확인하는 로직
             const isMatching =
               item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -330,6 +358,21 @@ const Profile = ({ onSelectExcelItem }) => {
           })
         )}
       </Card>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000} // Set the duration in milliseconds (here it's 6 seconds)
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }} // Positions the Snackbar at bottom center
+      >
+        <Alert
+          elevation={6}
+          variant="filled"
+          severity={selectedExcelItem === null ? "error" : "success"} // Change severity to 'error' for red color or 'warning' for yellow color, etc.
+          onClose={handleSnackbarClose}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
