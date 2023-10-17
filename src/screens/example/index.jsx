@@ -4,13 +4,13 @@ import {
   Typography,
   Button,
   Input,
-  ListItemText,
-  List,
+  // ListItemText,
+  // List,
 } from "@mui/material";
 import GiftIcon from "@mui/icons-material/CardGiftcardOutlined";
 import DeleteIcon from "@mui/icons-material/DeleteSweepOutlined";
-import WinningHistoryTable from "components/WinHistoryTable";
-import ListTable from "components/ListTable";
+// import WinningHistoryTable from "components/WinHistoryTable";
+// import ListTable from "components/ListTable";
 import Profile from "components/Profile";
 import DefaultBox from "components/DefaultBox";
 import Header from "components/Header";
@@ -18,7 +18,7 @@ import ExampleCompChart from "components/ExampleChart";
 import ActivityChart from "components/ExampleActiveChart";
 
 const Test = () => {
-  const [items, setItems] = useState(["꽝", "당첨", "당첨광"]); // 룰렛 내역들의 배열
+  const [items, setItems] = useState(["꽝", "당첨", "당첨꽝"]); // 룰렛 내역들의 배열
   const [probabilities, setProbabilities] = useState([50, 10, 40]); // 룰렛 내역들의 확률 배열
   const [oneTimeAmount, setOneTimeAmount] = useState(2000); // 룰렛 1회 사용 금액
   const [cumulativeAmount, setCumulativeAmount] = useState(0); // 룰렛 사용 누적 금액
@@ -258,12 +258,14 @@ const Test = () => {
   };
 
   const handleExcelReset = () => {
-    setItems(["꽝", "당첨"]);
-    setProbabilities([50, 50]);
+    setItems(["꽝", "당첨", "당첨꽝"]);
+    setProbabilities([50, 10, 40]);
+    setOneTimeAmount(2000);
     setWinningHistory([]);
     setTargetItemWinCount(0);
     setTotalSpentForTargetItem(0);
     setCumulativeAmount(0);
+    setSelectedExcelItem(null);
     setExcelFile(null); // Clear the uploaded Excel file data
     const fileInput = document.getElementById("excel-upload");
     if (fileInput) {
@@ -403,11 +405,17 @@ const Test = () => {
                 <Input
                   sx={{ fontSize: "2rem", color: "#3B3B3B" }}
                   type="number"
-                  value={
-                    selectedExcelItem
-                      ? selectedExcelItem.excDownPrice
-                      : oneTimeAmount
+                  value={selectedExcelItem.excDownPrice}
+                  onChange={(e) =>
+                    handleInputChange("oneTimeAmount", e.target.value)
                   }
+                />
+              )}
+              {!selectedExcelItem && (
+                <Input
+                  sx={{ fontSize: "2rem", color: "#3B3B3B" }}
+                  type="number"
+                  value={oneTimeAmount}
                   onChange={(e) =>
                     handleInputChange("oneTimeAmount", e.target.value)
                   }
